@@ -1,0 +1,49 @@
+.root-div {
+    padding: 30px;
+}
+
+
+.left-div {
+    width: 60%;
+    height: 100%;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.left-img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+
+.right-div {
+    width: 40%;
+    height: 100%;
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.right-top-div {
+    float: top;
+    text-align: center
+}
+
+
+.right-bottom-div {
+    float:top;
+    margin-top: 30px;
+}
+
+
+.right-bottom-fieldset {
+    padding-left: 12px;
+}

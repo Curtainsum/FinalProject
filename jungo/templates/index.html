@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>载具-动物 智能识别</title>
+
+    <link rel="stylesheet" href="../static/css/layui.css">
+    <link rel="stylesheet" href="../static/css/mainui.css">
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">载具-动物 智能识别</div>
+    </div>
+
+    <div class="layui-body root-div">
+        <div class="left-div">
+            <img class="left-img" src="../static/images/default.png" class="layui-upload-img" id="imgbox"/>
+        </div>
+        <div class="right-div">
+            <div class="right-top-div">
+                <button type="button" class="layui-btn layui-btn-primary" id="btn_upload">上传图片</button>
+            </div>
+
+            <div class="right-bottom-div">
+                <fieldset class="layui-elem-field layui-field-title right-bottom-fieldset">
+                    <legend>识别结果</legend>
+                </fieldset>
+
+                <div class="layui-form">
+                    <table class="layui-table">
+                        <colgroup>
+                            <col width="80">
+                            <col width="80">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>类别</th>
+                            <th>子类别</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td id="type">&nbsp;</td>
+                            <td id="sub_type">&nbsp;</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-footer">
+        © 西北农林科技大学 - 华为人工智能实训项目 - B10
+    </div>
+</div>
+
+<script src="/static/layui.js"></script>
+<script>
+    layui.use('element', function () {
+        var element = layui.element;
+    });
+
+    layui.use('upload', function () {
+        var $ = layui.jquery
+            , upload = layui.upload;
+
+        var uploadInst = upload.render({
+            elem: '#btn_upload'
+            , url: '/upload/'
+            , accept: 'images'
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#imgbox').attr('src', result); //图片链接（base64）
+                });
+            }
+            , done: function (res) {
+                let type = document.getElementById('type');
+                let sub_type = document.getElementById('sub_type');
+                if (res.code == 0) {
+                    type.innerText = res.data.type;
+                    sub_type.innerText = res.data.sub_type;
+                    return layer.msg('识别成功');
+                } else {
+                    type.innerText = 'N/A';
+                    sub_type.innerText = 'N/A';
+                    return layer.msg('识别失败');
+                }
+            }
+            , error: function () {
+                if (res.code == 0) {
+                    return layer.msg('上传失败');
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>
